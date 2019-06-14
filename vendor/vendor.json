@@ -1,0 +1,79 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "BuBMbbkk3gScHdoZlfffjvjJcfc=",
+			"path": "github.com/cespare/xxhash",
+			"revision": "096ff4a8a0597537a6da372d07186f3ea5de20af",
+			"revisionTime": "2018-10-17T00:07:24Z"
+		},
+		{
+			"checksumSHA1": "yNyE9MrpDJQAxOxSipSIBgBhuNQ=",
+			"path": "github.com/google/uuid",
+			"revision": "9b3b1e0f5f99ae461456d768e7d301a7acdaa2d8",
+			"revisionTime": "2018-09-17T14:00:05Z"
+		},
+		{
+			"checksumSHA1": "+t6mprYUk4MUuJL3H8cwGXNiVnI=",
+			"path": "github.com/grpc-ecosystem/go-grpc-middleware/util/backoffutils",
+			"revision": "cfaf5686ec79ff8344257723b6f5ba1ae0ffeb4d",
+			"revisionTime": "2019-02-22T13:33:41Z"
+		},
+		{
+			"checksumSHA1": "Pj4nOTpbqVUB4b+cxO0CExXodf4=",
+			"path": "github.com/klauspost/cpuid",
+			"revision": "0da02118eaa37aa89aea6776b464a4ad00990af1",
+			"revisionTime": "2019-01-10T10:16:22Z"
+		},
+		{
+			"checksumSHA1": "gm47e/sn40cs7Gj/+XcK6C7wYTc=",
+			"path": "github.com/mholt/certmagic",
+			"revision": "e3e89d1096d76d61680f8eeb8f67649baa6c54b8",
+			"revisionTime": "2019-02-25T06:09:13Z"
+		},
+		{
+			"checksumSHA1": "mWqYdfRxbUQsf1vvnGrtBWNP96M=",
+			"path": "github.com/miekg/dns",
+			"revision": "1f99ca2fa4cadf29da1c0b4bf629a7424818ed31",
+			"revisionTime": "2019-03-13T07:36:34Z"
+		},
+		{
+			"checksumSHA1": "bs4Qet93Z8f2eB8MVdM2hXXTyso=",
+			"path": "go.uber.org/zap",
+			"revision": "d2a364dac1d9b70c651d9f47381c5912361e5596",
+			"revisionTime": "2019-02-15T01:25:40Z"
+		},
+		{
+			"checksumSHA1": "MuxOAtZEsJitlWBzhmpm2vGiHok=",
+			"path": "go.uber.org/zap/internal/bufferpool",
+			"revision": "d2a364dac1d9b70c651d9f47381c5912361e5596",
+			"revisionTime": "2019-02-15T01:25:40Z"
+		},
+		{
+			"checksumSHA1": "klOgUG8O4wvk2/6m3VrublB6gN8=",
+			"path": "gopkg.in/square/go-jose.v2",
+			"revision": "628223f44a71f715d2881ea69afc795a1e9c01be",
+			"revisionTime": "2019-02-26T00:52:03Z"
+		},
+		{
+			"checksumSHA1": "Ho5sr2GbiR8S35IRni7vC54d5Js=",
+			"path": "gopkg.in/square/go-jose.v2/cipher",
+			"revision": "628223f44a71f715d2881ea69afc795a1e9c01be",
+			"revisionTime": "2019-02-26T00:52:03Z"
+		},
+		{
+			"checksumSHA1": "JFun0lWY9eqd80Js2iWsehu1gc4=",
+			"path": "gopkg.in/square/go-jose.v2/json",
+			"revision": "628223f44a71f715d2881ea69afc795a1e9c01be",
+			"revisionTime": "2019-02-26T00:52:03Z"
+		},
+		{
+			"checksumSHA1": "eC4EilTe+GdHxe9xDWhNK1nEclM=",
+			"path": "nanomsg.org/go/mangos/v2",
+			"revision": "63f66a65137b9a648ac9f7bf0160b4a4d17d7999",
+			"revisionTime": "2018-12-01T15:06:48Z"
+		}
+	],
+	"rootPath": "github.org/gabrielperezs/elinproxy"
+}
