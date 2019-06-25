@@ -11,7 +11,8 @@ import (
 )
 
 var (
-	fileNo int64 = 0
+	fileNo     int64
+	maxWaiting = time.Hour * 1
 )
 
 type VFile struct {
@@ -131,7 +132,11 @@ func (vf *VFile) AutoExpire() {
 	vf.CloseWriter()
 	// Sleep until the oldest record expire
 	go func() {
-		time.Sleep(vf.ttl + (time.Duration((vf.ttl.Seconds() * 0.25)) * time.Second))
+		max := time.Duration((vf.ttl.Seconds() * 0.25)) * time.Second
+		if max > maxWaiting {
+			max = maxWaiting
+		}
+		time.Sleep(vf.ttl + max)
 		vf.Close()
 	}()
 }
