@@ -42,7 +42,7 @@ func calcIndex(l int) int {
 	return (l / itemMemMinSize) % len(itemMemPool)
 }
 
-func GetItemLen(l int) *ItemMem {
+func getItemLen(l int) *ItemMem {
 	if l > itemMemMaxSize {
 		l = itemMemMaxSize
 	}
@@ -59,7 +59,7 @@ func GetItemLen(l int) *ItemMem {
 	return itm
 }
 
-func PutItem(itm *ItemMem) {
+func putItemMem(itm *ItemMem) {
 	l := cap(itm.Data)
 	for k := range itm.Header {
 		delete(itm.Header, k)

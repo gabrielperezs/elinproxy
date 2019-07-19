@@ -107,15 +107,15 @@ func (vl *VLog) reader(ttl time.Duration, in chan *ItemMem) {
 }
 
 func (vl *VLog) transform(w *VFile, itm *ItemMem) (*ItemDisk, error) {
-	itd := &ItemDisk{
-		Key:        itm.Key,
-		StatusCode: itm.StatusCode,
-		Off:        w.Seek(),
-		HeadSize:   0,
-		BodySize:   0,
-		VFile:      w,
-		HIT:        atomic.LoadUint64(&itm.HIT),
-	}
+
+	itd := getItemDisk()
+	itd.Key = itm.Key
+	itd.StatusCode = itm.StatusCode
+	itd.Off = w.Seek()
+	itd.HeadSize = 0
+	itd.BodySize = 0
+	itd.VFile = w
+	itd.HIT = atomic.LoadUint64(&itm.HIT)
 
 	if err := itm.Header.Write(w); err != nil {
 		log.Printf("ERROR lsm/vlog write header: %v", err)
