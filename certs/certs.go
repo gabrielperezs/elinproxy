@@ -43,31 +43,13 @@ func New(cfg *Config) *Certs {
 		return nil
 	}
 
-	cache := certmagic.NewCache(newStorage(cfg.EtcdEndpoints))
-	acme := certmagic.NewWithCache(cache, certmagic.Config{
-		CA:                      cfg.CA,
-		Agreed:                  true,
-		Email:                   cfg.Email,
-		AltHTTPPort:             cfg.AltHTTPPort,
-		AltTLSALPNPort:          cfg.AltTLSALPNPort,
-		DisableTLSALPNChallenge: true,
-		OnDemand: &certmagic.OnDemandConfig{
-			DecisionFunc: func(name string) error {
-				log.Printf("[D] certs/certmagic OnDemand: %s", name)
-				return nil
-			},
-		},
-	})
-
 	c := &Certs{
-		acme:    acme,
+		acme:    certmagic.NewDefault(),
 		certs:   nil,
 		certsWC: nil,
 	}
+	c.Reload(cfg)
 
-	if cfg != nil {
-		c.LoadCertsFromConfig(cfg.PEM)
-	}
 	return c
 }
 
@@ -78,8 +60,19 @@ func (c *Certs) TLSConfig() *tls.Config {
 func (c *Certs) Reload(cfg *Config) {
 	c.LoadCertsFromConfig(cfg.PEM)
 	c.Lock()
+	c.acme.Storage = newStorage(cfg.EtcdEndpoints)
 	c.acme.CA = cfg.CA
+	c.acme.Agreed = true
 	c.acme.Email = cfg.Email
+	c.acme.AltHTTPPort = cfg.AltHTTPPort
+	c.acme.AltTLSALPNPort = cfg.AltTLSALPNPort
+	c.acme.DisableTLSALPNChallenge = true
+	c.acme.OnDemand = &certmagic.OnDemandConfig{
+		DecisionFunc: func(name string) error {
+			log.Printf("[D] certs/certmagic OnDemand: %s", name)
+			return nil
+		},
+	}
 	c.Unlock()
 }
 
