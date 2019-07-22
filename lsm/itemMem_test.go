@@ -8,7 +8,7 @@ import (
 
 func TestLsmItemMemTempFileClose(t *testing.T) {
 	body := bytes.Repeat([]byte("A"), itemMemLimitForTempFile*10)
-	itm := GetItemLen(0)
+	itm := getItemLen(0)
 	itm.Write(body)
 	if len(itm.Data) > 0 {
 		t.Errorf("Data should be empty after write over %d: %d", itemMemLimitForTempFile, len(itm.Data))
@@ -26,7 +26,7 @@ func TestLsmItemMemTempFileClose(t *testing.T) {
 func TestLsmItemMemTempFile(t *testing.T) {
 	buf := bytes.NewBuffer(make([]byte, 0))
 	body := bytes.Repeat([]byte("A"), 1024)
-	itm := GetItemLen(0)
+	itm := getItemLen(0)
 	wrote := 0
 	for i := 0; i <= 1024; i++ {
 		n, _ := itm.Write(body)
@@ -49,7 +49,7 @@ func TestLsmItemMemTempFile(t *testing.T) {
 func TestLsmItemMemTempFileConcurr(t *testing.T) {
 	buf := bytes.NewBuffer(make([]byte, 0))
 	body := bytes.Repeat([]byte("A"), 1024)
-	itm := GetItemLen(0)
+	itm := getItemLen(0)
 	wrote := 0
 	for i := 0; i <= 1024; i++ {
 		n, _ := itm.Write(body)
