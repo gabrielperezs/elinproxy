@@ -68,6 +68,7 @@ func putItemMem(itm *ItemMem) {
 	itm.Data = itm.Data[:0]
 	itm.HIT = 0
 	itm.StatusCode = 0
+	itm.inUse = 0
 	itm.Close()
 
 	switch {

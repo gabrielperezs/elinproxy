@@ -22,9 +22,9 @@ import (
 
 	"github.com/cespare/xxhash"
 
-	"github.com/gabrielperezs/elinproxy/lsm"
 	"github.com/didip/tollbooth"
 	"github.com/didip/tollbooth/limiter"
+	"github.com/gabrielperezs/elinproxy/lsm"
 
 	"github.com/gabrielperezs/elinproxy/httpsrv/cacherules"
 	"github.com/gabrielperezs/elinproxy/httpsrv/httplog"
@@ -350,7 +350,7 @@ func (handler *Handler) modifyResponse(key uint64, resp *http.Response, ttl time
 	item.Key = key
 	item.StatusCode = resp.StatusCode
 	for k, v := range resp.Header {
-		item.Header[k] = v
+		item.Header[k] = append(item.Header[k], v...)
 	}
 
 	if err := DumpResponse(resp, true, item); err != nil {
