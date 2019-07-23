@@ -3,10 +3,100 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "bPqEIUDyjGuP28UR51c96vfN4xM=",
+			"path": "github.com/cenkalti/backoff",
+			"revision": "4b4cebaf850ec58f1bb1fec5bdebdf8501c2bc3f",
+			"revisionTime": "2019-05-11T09:24:43Z"
+		},
+		{
 			"checksumSHA1": "BuBMbbkk3gScHdoZlfffjvjJcfc=",
 			"path": "github.com/cespare/xxhash",
 			"revision": "096ff4a8a0597537a6da372d07186f3ea5de20af",
 			"revisionTime": "2018-10-17T00:07:24Z"
+		},
+		{
+			"checksumSHA1": "QHOh2i03HSQOOkJVVWF43FKLDkM=",
+			"path": "github.com/go-acme/lego/acme/api",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "ZvKeoB8VQOQVhLXtkAl2bDTS/cw=",
+			"path": "github.com/go-acme/lego/acme/api/internal/nonces",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "XFudWVMcXsN6JMgLztffBY1ny0M=",
+			"path": "github.com/go-acme/lego/acme/api/internal/secure",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "oa3F6MvQTg14Eyyua9RzBGdgBsk=",
+			"path": "github.com/go-acme/lego/acme/api/internal/sender",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "ADe1EQehxEtgtbPDTtPDBUeaYVs=",
+			"path": "github.com/go-acme/lego/certificate",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "4+1d9x+bMEGo8/saQVwD9VQqFpo=",
+			"path": "github.com/go-acme/lego/challenge",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "2g5RhqZt5x0FtYgjbrvjLdPo6Hs=",
+			"path": "github.com/go-acme/lego/challenge/dns01",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "EdhRm6YsXT7RZtr0ouDS7p497+w=",
+			"path": "github.com/go-acme/lego/challenge/http01",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "WzfCfahAZXsvkjsMIFv3dUlsv6g=",
+			"path": "github.com/go-acme/lego/challenge/resolver",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "Shy/Wu4mYToL+foOcJ63VxKUA2g=",
+			"path": "github.com/go-acme/lego/challenge/tlsalpn01",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "L7IBd++liqc00+XS736EaI8J484=",
+			"path": "github.com/go-acme/lego/lego",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "6v/KtbHK8lPCCv+EQPsxwrmdaJg=",
+			"path": "github.com/go-acme/lego/log",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "JioYs10vH7Mnh2DQP8b/PLgd5JY=",
+			"path": "github.com/go-acme/lego/platform/wait",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
+		},
+		{
+			"checksumSHA1": "S1wA15BW9tFY/WKfgt6AIa89P1M=",
+			"path": "github.com/go-acme/lego/registration",
+			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
+			"revisionTime": "2019-06-14T12:19:38Z"
 		},
 		{
 			"checksumSHA1": "yNyE9MrpDJQAxOxSipSIBgBhuNQ=",
