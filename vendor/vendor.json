@@ -15,6 +15,18 @@
 			"revisionTime": "2018-10-17T00:07:24Z"
 		},
 		{
+			"checksumSHA1": "TH1jNcNejXHDDjQge0Bpq4lrzFY=",
+			"path": "github.com/didip/tollbooth/errors",
+			"revision": "b10a036da5f05864224ee09432e489b32a6b2d1d",
+			"revisionTime": "2018-04-15T19:51:42Z"
+		},
+		{
+			"checksumSHA1": "t51vPudMi7asckui55HX2KAD14c=",
+			"path": "github.com/didip/tollbooth/libstring",
+			"revision": "b10a036da5f05864224ee09432e489b32a6b2d1d",
+			"revisionTime": "2018-04-15T19:51:42Z"
+		},
+		{
 			"checksumSHA1": "QHOh2i03HSQOOkJVVWF43FKLDkM=",
 			"path": "github.com/go-acme/lego/acme/api",
 			"revision": "346d3222d7f66a4e0315cfba148c6b5b4fe24e08",
@@ -129,6 +141,36 @@
 			"revisionTime": "2019-03-13T07:36:34Z"
 		},
 		{
+			"checksumSHA1": "JVGDxPn66bpe6xEiexs1r+y6jF0=",
+			"path": "github.com/patrickmn/go-cache",
+			"revision": "a3647f8e31d79543b2d0f0ae2fe5c379d72cedc0",
+			"revisionTime": "2017-07-22T04:01:10Z"
+		},
+		{
+			"checksumSHA1": "gQVcoum3Wk1rKcUtaLOoZojxeLI=",
+			"path": "github.com/prometheus/client_golang/prometheus",
+			"revision": "7490f0a74525a1f863eaf81b42f3ead3a1ecc43a",
+			"revisionTime": "2019-03-25T08:23:28Z"
+		},
+		{
+			"checksumSHA1": "UBqhkyjCz47+S19MVTigxJ2VjVQ=",
+			"path": "github.com/prometheus/client_golang/prometheus/internal",
+			"revision": "7490f0a74525a1f863eaf81b42f3ead3a1ecc43a",
+			"revisionTime": "2019-03-25T08:23:28Z"
+		},
+		{
+			"checksumSHA1": "BFMAsj5z3cYaNKx9fwHrazQRFvI=",
+			"path": "github.com/prometheus/client_golang/prometheus/promauto",
+			"revision": "7490f0a74525a1f863eaf81b42f3ead3a1ecc43a",
+			"revisionTime": "2019-03-25T08:23:28Z"
+		},
+		{
+			"checksumSHA1": "wR/mIioOTUWo2HmQaACuux6MJ5A=",
+			"path": "github.com/prometheus/client_golang/prometheus/promhttp",
+			"revision": "7490f0a74525a1f863eaf81b42f3ead3a1ecc43a",
+			"revisionTime": "2019-03-25T08:23:28Z"
+		},
+		{
 			"checksumSHA1": "bs4Qet93Z8f2eB8MVdM2hXXTyso=",
 			"path": "go.uber.org/zap",
 			"revision": "d2a364dac1d9b70c651d9f47381c5912361e5596",
@@ -139,6 +181,48 @@
 			"path": "go.uber.org/zap/internal/bufferpool",
 			"revision": "d2a364dac1d9b70c651d9f47381c5912361e5596",
 			"revisionTime": "2019-02-15T01:25:40Z"
+		},
+		{
+			"checksumSHA1": "PGEmqKttvy7NzqOkwNKI5E5xtOs=",
+			"path": "golang.org/x/crypto/ocsp",
+			"revision": "5c40567a22f818bd14a1ea7245dad9f8ef0691aa",
+			"revisionTime": "2019-06-11T18:31:17Z"
+		},
+		{
+			"checksumSHA1": "1MGpGDQqnUoRpv7VEcQrXOBydXE=",
+			"path": "golang.org/x/crypto/pbkdf2",
+			"revision": "5c40567a22f818bd14a1ea7245dad9f8ef0691aa",
+			"revisionTime": "2019-06-11T18:31:17Z"
+		},
+		{
+			"checksumSHA1": "CHpYrf4HcmHB60gnTNxgjGgY53w=",
+			"path": "golang.org/x/net/internal/iana",
+			"revision": "da137c7871d730100384dbcf36e6f8fa493aef5b",
+			"revisionTime": "2019-06-28T18:40:41Z"
+		},
+		{
+			"checksumSHA1": "4vBBc8EXFsyNS8lJ4g8ljXUlYqo=",
+			"path": "golang.org/x/net/internal/socket",
+			"revision": "da137c7871d730100384dbcf36e6f8fa493aef5b",
+			"revisionTime": "2019-06-28T18:40:41Z"
+		},
+		{
+			"checksumSHA1": "BeKuwferCpRcN+C4oEQGm/pdTAU=",
+			"path": "golang.org/x/net/ipv4",
+			"revision": "da137c7871d730100384dbcf36e6f8fa493aef5b",
+			"revisionTime": "2019-06-28T18:40:41Z"
+		},
+		{
+			"checksumSHA1": "0y/G2ldFEmgz27dnfenBSYY2tv8=",
+			"path": "golang.org/x/net/ipv6",
+			"revision": "da137c7871d730100384dbcf36e6f8fa493aef5b",
+			"revisionTime": "2019-06-28T18:40:41Z"
+		},
+		{
+			"checksumSHA1": "VhUZFUuhLFSBFUfskMC4am5RIdc=",
+			"path": "golang.org/x/sync/singleflight",
+			"revision": "e225da77a7e68af35c70ccbf71af2b83e6acac3c",
+			"revisionTime": "2019-02-15T22:36:53Z"
 		},
 		{
 			"checksumSHA1": "klOgUG8O4wvk2/6m3VrublB6gN8=",
@@ -161,6 +245,18 @@
 		{
 			"checksumSHA1": "eC4EilTe+GdHxe9xDWhNK1nEclM=",
 			"path": "nanomsg.org/go/mangos/v2",
+			"revision": "63f66a65137b9a648ac9f7bf0160b4a4d17d7999",
+			"revisionTime": "2018-12-01T15:06:48Z"
+		},
+		{
+			"checksumSHA1": "aalGD3/QWBMI1ZKJEoyp+YhRZW0=",
+			"path": "nanomsg.org/go/mangos/v2/protocol/pub",
+			"revision": "63f66a65137b9a648ac9f7bf0160b4a4d17d7999",
+			"revisionTime": "2018-12-01T15:06:48Z"
+		},
+		{
+			"checksumSHA1": "QUpRSpdvCLaEejKQCBhRoawMHnA=",
+			"path": "nanomsg.org/go/mangos/v2/transport/all",
 			"revision": "63f66a65137b9a648ac9f7bf0160b4a4d17d7999",
 			"revisionTime": "2018-12-01T15:06:48Z"
 		}
