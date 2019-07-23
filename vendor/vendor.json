@@ -9,12 +9,6 @@
 			"revisionTime": "2018-03-21T16:47:47Z"
 		},
 		{
-			"checksumSHA1": "bPqEIUDyjGuP28UR51c96vfN4xM=",
-			"path": "github.com/cenkalti/backoff",
-			"revision": "4b4cebaf850ec58f1bb1fec5bdebdf8501c2bc3f",
-			"revisionTime": "2019-05-11T09:24:43Z"
-		},
-		{
 			"checksumSHA1": "BuBMbbkk3gScHdoZlfffjvjJcfc=",
 			"path": "github.com/cespare/xxhash",
 			"revision": "096ff4a8a0597537a6da372d07186f3ea5de20af",
