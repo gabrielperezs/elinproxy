@@ -56,16 +56,12 @@ func newMetrics() *metrics {
 	return m
 }
 func (m *metrics) save(l *HTTPLog) {
-	hit := "false"
-	if l.HIT {
-		hit = "true"
-	}
 	label := prometheus.Labels{
-		"hit":    hit,
-		"code":   strconv.Itoa(l.StatusCode),
-		"method": l.Method,
-		"host":   l.Host,
-		"schema": l.Schema,
+		"ratelimit": strconv.FormatBool(l.RateLimit),
+		"hit":       strconv.FormatBool(l.HIT),
+		"code":      strconv.Itoa(l.StatusCode),
+		"method":    l.Method,
+		"schema":    l.Schema,
 	}
 	m.responseCode.With(label).Inc()
 	m.responseTTFB.With(label).Observe(l.RespTTFMS)

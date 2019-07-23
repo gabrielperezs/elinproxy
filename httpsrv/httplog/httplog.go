@@ -18,7 +18,7 @@ import (
 
 var (
 	listen      = "ipc:///tmp/elinproxy.sock"
-	msgCh       = make(chan *HTTPLog, 2)
+	msgCh       = make(chan HTTPLog, 2)
 	schemaHTTP  = "http"
 	schemaHTTPS = "https"
 
@@ -145,12 +145,12 @@ func (hl *HTTPLog) Done() {
 	hl.end()
 	m.save(hl)
 	select {
-	case msgCh <- hl:
+	case msgCh <- *hl:
 	default:
 	}
 }
 
-func (hl *HTTPLog) MarshalString() string {
+func (hl HTTPLog) MarshalString() string {
 	return fmt.Sprintf(
 		"%s %s %s %v %v %v %s \"%s\" %d %.4f %.4f %d %d \"%s\" %s",
 		hl.Time.Format(time.RFC3339),
@@ -163,7 +163,7 @@ func (hl *HTTPLog) MarshalString() string {
 	)
 }
 
-func (hl *HTTPLog) MarshalJSON() []byte {
+func (hl HTTPLog) MarshalJSON() []byte {
 	b, _ := json.Marshal(hl)
 	return b
 }
