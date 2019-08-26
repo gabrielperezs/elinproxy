@@ -134,7 +134,11 @@ func New(r *http.Request, w http.ResponseWriter, fnHeaders func(w http.ResponseW
 // IMPORTANT: This is the key of the cache engine, if this
 // do not generate the correct string will fuck the cache
 func (hl *HTTPLog) GetKeyStr() string {
-	return strconv.Itoa(hl.Device) + hl.Method + hl.URL
+	return hl.GetKeyStrDevice(hl.Device)
+}
+
+func (hl *HTTPLog) GetKeyStrDevice(device int) string {
+	return strconv.Itoa(device) + hl.Method + hl.URL
 }
 
 func (hl *HTTPLog) end() {

@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func (ir *InternalRules) IsReqCachable(req *http.Request) (ok bool) {
+func (ir *InternalRules) IsReqCachable(req *http.Request) (ok bool, refresh bool) {
 	ok = true
 
 	if req.Method != methodGET && req.Method != methodHEAD {
@@ -30,6 +30,8 @@ func (ir *InternalRules) IsReqCachable(req *http.Request) (ok bool) {
 	}
 
 	if ok = ir.isReqCachableCookieContains(req); !ok {
+		// This flag will remove the current request from the cache
+		refresh = true
 		return
 	}
 

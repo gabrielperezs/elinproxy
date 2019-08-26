@@ -123,6 +123,10 @@ func (c *LSM) Get(key uint64) (Item, bool, error) {
 	return nil, false, ErrItemNotFound
 }
 
+func (c *LSM) Delete(key uint64) {
+	c.mem.RemoveByKey(key)
+}
+
 func RemoveContents(dir string) error {
 	d, err := os.Open(dir)
 	if err != nil {

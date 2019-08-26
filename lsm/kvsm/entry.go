@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	noContent        = "no content"
+	noContent        interface{}
 	noContentPointer = unsafe.Pointer(&noContent)
 )
 
@@ -20,6 +20,7 @@ type entry struct {
 	next     *entry
 }
 
+// Value return true if is expired
 func (e *entry) Expired() (ok bool) {
 	if time.Now().UnixNano() > e.expireAt {
 		ok = true
@@ -27,15 +28,23 @@ func (e *entry) Expired() (ok bool) {
 	return
 }
 
+// Value store the value
 func (e *entry) Value(v interface{}) {
 	atomic.StorePointer(&e.p, unsafe.Pointer(&v))
 }
 
+// Value store the value
+func (e *entry) ValueReset() {
+	atomic.StorePointer(&e.p, noContentPointer)
+}
+
+// GetValue return the value
 func (e *entry) GetValue() interface{} {
 	v := atomic.LoadPointer(&e.p)
 	return *(*interface{})(v)
 }
 
+// SwapValue store the new value and return the old value
 func (e *entry) SwapValue(v interface{}) interface{} {
 	old := atomic.SwapPointer(&e.p, unsafe.Pointer(&v))
 	return *(*interface{})(old)
@@ -56,7 +65,7 @@ var (
 )
 
 func putEntry(e *entry) {
-	atomic.StorePointer(&e.p, noContentPointer)
+	e.ValueReset()
 	e.prev = nil
 	e.next = nil
 	e.key = nil
