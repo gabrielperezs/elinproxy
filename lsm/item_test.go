@@ -23,9 +23,9 @@ func TestGetPutItemByLen(t *testing.T) {
 
 	for c := 0; c < 4; c++ {
 		for _, i := range testList {
-			itm = GetItemLen(i)
+			itm = getItemLen(i)
 			t.Logf("Req: %d - Cap: %v (%d)", i, cap(itm.Data), cap(itm.Data)/itemMemMinSize)
-			PutItem(itm)
+			putItemMem(itm)
 		}
 	}
 }

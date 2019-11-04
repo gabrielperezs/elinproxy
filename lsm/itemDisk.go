@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"net/textproto"
+	"sync"
 	"sync/atomic"
 )
 
@@ -17,7 +18,28 @@ const (
 var (
 	// ErrReadingItemDisk is the error reponse if the range is not correct
 	ErrReadingItemDisk = errors.New("The bytes read don't match with the body size definition")
+	itemDiskPool       = sync.Pool{}
 )
+
+func getItemDisk() *ItemDisk {
+	in := itemDiskPool.Get()
+	if v, ok := in.(*ItemDisk); ok {
+		return v
+	}
+	return &ItemDisk{}
+}
+
+func putItemDisk(v *ItemDisk) {
+	v.BodySize = 0
+	v.HIT = 0
+	v.HeadSize = 0
+	v.Key = 0
+	v.Off = 0
+	v.StatusCode = 0
+	v.VFile = nil
+	v.inUse = 0
+	itemDiskPool.Put(v)
+}
 
 // ItemDisk is the struct that define the location of this item. Like the
 // file where is stored and also the possition in the file for each element

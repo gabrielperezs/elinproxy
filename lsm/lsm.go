@@ -75,13 +75,13 @@ func (c *LSM) onEvictInternal(x interface{}) (n int64) {
 	case *ItemMem:
 		n = atomic.LoadInt64(&it.inUse)
 		if n == 0 {
-			PutItem(it)
+			putItemMem(it)
 			return
 		}
 	case *ItemDisk:
 		n = atomic.LoadInt64(&it.inUse)
 		if n == 0 {
-			it.VFile = nil
+			putItemDisk(it)
 			return
 		}
 	default:
@@ -97,7 +97,7 @@ func (c *LSM) onEvictInternal(x interface{}) (n int64) {
 }
 
 func (c *LSM) NewItem(l int) *ItemMem {
-	return GetItemLen(l)
+	return getItemLen(l)
 }
 
 func (c *LSM) Set(key uint64, itm *ItemMem, ttl time.Duration) {
