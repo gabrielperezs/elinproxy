@@ -28,6 +28,7 @@ require (
 	github.com/prometheus/procfs v0.0.0-20190328153300-af7bedc223fb
 	github.com/valyala/fasthttp v0.0.0-20190429131247-15dbe35bb591
 	github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a
+	github.com/xenolf/lego v2.7.2+incompatible
 	go.etcd.io/etcd v0.0.0-20190227060824-17de9bd5268a
 	go.uber.org/atomic v1.3.2
 	go.uber.org/multierr v1.1.0

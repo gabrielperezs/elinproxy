@@ -136,6 +136,8 @@ github.com/valyala/fasthttp v0.0.0-20190429131247-15dbe35bb591 h1:80sI9p6iFigeAN
 github.com/valyala/fasthttp v0.0.0-20190429131247-15dbe35bb591/go.mod h1:4vX61m6KN+xDduDNwXrhIAVZaZaZiQ1luJk8LWSxF3s=
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a h1:0R4NLDRDZX6JcmhJgXi5E4b8Wg84ihbmUKp/GvSPEzc=
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a/go.mod h1:v3UYOV9WzVtRmSR+PDvWpU/qWl4Wa5LApYYX4ZtKbio=
+github.com/xenolf/lego v2.7.2+incompatible h1:aGxxYqhnQLQ71HsvEAjJVw6ao14APwPpRk0mpFroPXk=
+github.com/xenolf/lego v2.7.2+incompatible/go.mod h1:fwiGnfsIjG7OHPfOvgK7Y/Qo6+2Ox0iozjNTkZICKbY=
 github.com/xiang90/probing v0.0.0-20190116061207-43a291ad63a2/go.mod h1:UETIi67q53MR2AWcXfiuqkDkRtnGDLqkBTpCHuJHxtU=
 go.etcd.io/bbolt v1.3.2/go.mod h1:IbVyRI1SCnLcuJnV2u8VeU0CEYM7e686BmAb1XKL+uU=
 go.etcd.io/etcd v0.0.0-20190227060824-17de9bd5268a h1:FBCXIzdO7w2OG+B40eHKS0tRHrhAqsWkVlmRfL9h2HY=
