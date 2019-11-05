@@ -22,7 +22,7 @@ type metrics struct {
 }
 
 var (
-	labels = []string{"code", "hit", "method", "host", "schema"}
+	labels = []string{"ratelimit", "hit", "code", "method", "schema"}
 )
 
 func newMetrics() *metrics {
