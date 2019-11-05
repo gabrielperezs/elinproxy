@@ -10,4 +10,4 @@ os:
   - osx
 install: true
 script:
-  - env GO111MODULE=on go build
+  - go build
