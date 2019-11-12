@@ -149,6 +149,13 @@ func (handler *Handler) ServeHTTP(orgW http.ResponseWriter, r *http.Request) {
 	key := xxhash.Sum64String(keyStr)
 	isCachable := handler.rules.IsReqCachable(r)
 
+	if isCachable && handler.rules.Domain != nil {
+		// Use the rules for domains/hosts
+		if hostRule, ok := handler.rules.Domain[r.Host]; ok {
+			isCachable = hostRule.IsReqCachable(r)
+		}
+	}
+
 	if !isCachable {
 		if err := handler.reverseProxy(isCachable, key, r, hlog); err != nil {
 			hlog.RateLimit = true
