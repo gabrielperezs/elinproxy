@@ -61,12 +61,10 @@ func BenchmarkListAdd(b *testing.B) {
 
 	l := &linkedListTTL{}
 	var i int64
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			atomic.AddInt64(&i, 1)
-			e := newEntry(fmt.Sprintf("Entry %d", i))
-			l.Add(e)
-		}
+	b.Run("add", func(pb *testing.B) {
+		atomic.AddInt64(&i, 1)
+		e := newEntry(fmt.Sprintf("Entry %d", i))
+		l.Add(e)
 	})
 	t := int(atomic.LoadInt64(&i))
 	if l.Len() != t {
@@ -110,13 +108,11 @@ func BenchmarkListAddRemove(b *testing.B) {
 
 	l := &linkedListTTL{}
 	var i int64
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			li := atomic.AddInt64(&i, 1)
-			e := newEntry(fmt.Sprintf("Entry %d", li))
-			l.Add(e)
-			l.Remove(e)
-		}
+	b.Run("add", func(pb *testing.B) {
+		li := atomic.AddInt64(&i, 1)
+		e := newEntry(fmt.Sprintf("Entry %d", li))
+		l.Add(e)
+		l.Remove(e)
 	})
 	if l.Len() != 0 {
 		b.Errorf("Invalid final %d", l.Len())

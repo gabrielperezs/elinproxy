@@ -18,6 +18,8 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/avct/uasurfer"
+
 	"golang.org/x/sync/singleflight"
 
 	"github.com/cespare/xxhash"
@@ -45,6 +47,13 @@ var (
 		"Set-Cache",
 		"Proxy-Authenticate",
 		"WWW-Authenticate",
+	}
+	uaDeviceCleaner = []uasurfer.DeviceType{
+		uasurfer.DeviceUnknown,
+		uasurfer.DeviceComputer,
+		uasurfer.DeviceTablet,
+		uasurfer.DevicePhone,
+		uasurfer.DeviceConsole,
 	}
 )
 
@@ -147,7 +156,7 @@ func (handler *Handler) ServeHTTP(orgW http.ResponseWriter, r *http.Request) {
 
 	keyStr := hlog.GetKeyStr()
 	key := xxhash.Sum64String(keyStr)
-	isCachable := handler.rules.IsReqCachable(r)
+	isCachable, isRefreshable := handler.rules.IsReqCachable(r)
 
 	if isCachable && handler.rules.Domain != nil {
 		// Use the rules for domains/hosts
@@ -157,6 +166,12 @@ func (handler *Handler) ServeHTTP(orgW http.ResponseWriter, r *http.Request) {
 	}
 
 	if !isCachable {
+		if isRefreshable {
+			for i := range uaDeviceCleaner {
+				handler.cache.Delete(xxhash.Sum64String(hlog.GetKeyStrDevice(i)))
+			}
+		}
+
 		if err := handler.reverseProxy(isCachable, key, r, hlog); err != nil {
 			hlog.RateLimit = true
 		}

@@ -1,6 +1,7 @@
 package kvsm
 
 import (
+	"log"
 	"runtime"
 	"sort"
 	"sync"
@@ -24,22 +25,18 @@ type expMsg struct {
 }
 
 type KVSM struct {
-	items       *sync.Map
-	n           int64
-	replaceLLCh chan replaceMsg
-	delLLCh     chan expMsg
-	addLLCh     chan expMsg
-	onEvicted   func(v interface{}) int64
-	listTTL     map[time.Duration]*linkedListTTL
+	items     *sync.Map
+	n         int64
+	addLLCh   chan expMsg
+	onEvicted func(v interface{}) int64
+	listTTL   map[time.Duration]*linkedListTTL
 }
 
 func New() *KVSM {
 	kv := &KVSM{
-		items:       &sync.Map{},
-		replaceLLCh: make(chan replaceMsg, actionsBuffer),
-		delLLCh:     make(chan expMsg, actionsBuffer),
-		addLLCh:     make(chan expMsg, actionsBuffer),
-		listTTL:     make(map[time.Duration]*linkedListTTL, 50),
+		items:   &sync.Map{},
+		addLLCh: make(chan expMsg, actionsBuffer),
+		listTTL: make(map[time.Duration]*linkedListTTL, 50),
 	}
 	go kv.workerExpiration()
 	return kv
@@ -96,10 +93,31 @@ func (kv *KVSM) Swap(k uint64, v interface{}, ttl time.Duration) bool {
 func (kv *KVSM) Remove(e *entry) {
 	kv.items.Delete(e.key)
 	atomic.AddInt64(&kv.n, -1)
-	// Delete from linked list
-	kv.delLLCh <- expMsg{
-		entry: e,
+	kv.eviction(e)
+}
+
+func (kv *KVSM) RemoveByKey(k uint64) {
+	eiface, ok := kv.items.Load(k)
+	if !ok {
+		return
 	}
+	kv.items.Delete(k)
+	e, ok := eiface.(*entry)
+	if !ok {
+		return
+	}
+	e.ValueReset()
+	e.expireAt = 0
+}
+
+func (kv *KVSM) eviction(e *entry) {
+	if kv.onEvicted != nil {
+		p := e.GetValue()
+		if p != nil {
+			kv.onEvicted(p)
+		}
+	}
+	putEntry(e)
 }
 
 func (kv *KVSM) workerExpiration() {
@@ -107,15 +125,11 @@ func (kv *KVSM) workerExpiration() {
 	move := time.NewTimer(nextTry)
 	for {
 		select {
-		case e := <-kv.delLLCh:
-			if kv.onEvicted != nil {
-				p := e.entry.GetValue()
-				if p != nil {
-					kv.onEvicted(p)
-				}
-			}
-			putEntry(e.entry)
 		case e := <-kv.addLLCh:
+			// Can't store ttl under 1 second
+			if e.ttl < time.Second {
+				e.ttl = time.Second
+			}
 			if kv.listTTL[e.ttl] == nil {
 				kv.listTTL[e.ttl] = &linkedListTTL{}
 			}
@@ -132,6 +146,11 @@ func (kv *KVSM) workerExpiration() {
 
 			for _, k := range keys {
 				tkd := time.Duration(k) * time.Second
+				if _, ok := kv.listTTL[tkd]; !ok {
+					// Paranotic. Protection for invalid ttl
+					log.Printf("KVSM: Invalid TTL: %s", tkd)
+					continue
+				}
 				if kv.listTTL[tkd].Len() == 0 {
 					continue
 				}
@@ -151,8 +170,8 @@ func (kv *KVSM) workerExpiration() {
 
 					p := e.GetValue()
 					if p == nil || e.Expired() {
-						kv.Remove(e)
 						kv.listTTL[tkd].Remove(e)
+						kv.Remove(e)
 						continue
 					}
 					break

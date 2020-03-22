@@ -26,6 +26,8 @@ func (el *linkedListTTL) Len() int {
 	return el.size
 }
 
+// Add will add an element to the linked list
+// IMPORTANT: Not safe to use with concurrency
 func (el *linkedListTTL) Add(e *entry) {
 	el.size++
 	currLast := el.last
