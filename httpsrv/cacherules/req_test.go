@@ -15,7 +15,7 @@ func TestNoReqContains(t *testing.T) {
 	req.Method = http.MethodGet
 	req.URL, _ = url.Parse("http://www.example.com/feed/")
 
-	if cr.IsReqCachable(req) {
+	if isCachable, _ := cr.IsReqCachable(req); isCachable {
 		t.Errorf("should not be cachable")
 	}
 }
@@ -29,7 +29,7 @@ func TestNoReqPrefix(t *testing.T) {
 	req.Method = http.MethodGet
 	req.URL, _ = url.Parse("http://www.example.com/feed/")
 
-	if cr.IsReqCachable(req) {
+	if isCachable, _ := cr.IsReqCachable(req); isCachable {
 		t.Errorf("should not be cachable")
 	}
 }
@@ -43,7 +43,7 @@ func TestNoReqSuffix(t *testing.T) {
 	req.Method = http.MethodGet
 	req.URL, _ = url.Parse("http://www.example.com/feed/")
 
-	if cr.IsReqCachable(req) {
+	if isCachable, _ := cr.IsReqCachable(req); isCachable {
 		t.Errorf("should not be cachable")
 	}
 }
@@ -64,7 +64,7 @@ func TestNoReqAll(t *testing.T) {
 
 	for _, u := range urls {
 		req.URL, _ = url.Parse(u)
-		if cr.IsReqCachable(req) {
+		if isCachable, _ := cr.IsReqCachable(req); isCachable {
 			t.Errorf("should not be cachable: %s", u)
 		}
 	}

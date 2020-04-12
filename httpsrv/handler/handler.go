@@ -161,7 +161,7 @@ func (handler *Handler) ServeHTTP(orgW http.ResponseWriter, r *http.Request) {
 	if isCachable && handler.rules.Domain != nil {
 		// Use the rules for domains/hosts
 		if hostRule, ok := handler.rules.Domain[r.Host]; ok {
-			isCachable = hostRule.IsReqCachable(r)
+			isCachable, isRefreshable = hostRule.IsReqCachable(r)
 		}
 	}
 

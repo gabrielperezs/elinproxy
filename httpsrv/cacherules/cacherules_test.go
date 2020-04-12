@@ -78,8 +78,8 @@ Content-Type: font/woff2
 	log.Printf("RespStatusCodeTTL: %+v", rules.RespStatusCodeTTL)
 	log.Printf("RespContentTypeTTL: %+v", rules.RespContentTypeTTL)
 
-	if ok := rules.IsReqCachable(req); !ok {
-		t.Errorf("Request: %+v ==> %v", req, ok)
+	if isCachable, _ := rules.IsReqCachable(req); !isCachable {
+		t.Errorf("Request: %+v ==> %v", req, isCachable)
 	}
 
 	if ttl, ok := rules.IsRespCachable(resp); !ok {

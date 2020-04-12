@@ -1,3 +1,16 @@
+
+GOCMD=go
+GOBUILD=$(GOCMD) build
+GOCLEAN=$(GOCMD) clean
+GOTEST=$(GOCMD) test
+GOGET=$(GOCMD) get
+
+all: test build
+
+test:
+	$(GOTEST) -run=^Test ./...
+
 build:
-	go build
-	go build -o elinproxycli ./client/
+	$(GOBUILD) -o elinproxy
+	$(GOBUILD) -o elinproxycli ./client/
+

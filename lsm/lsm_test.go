@@ -41,7 +41,7 @@ func TestBasic1(t *testing.T) {
 }
 
 func TestMultipleReaders(t *testing.T) {
-	ttl := 10 * time.Minute
+	ttl := 2 * time.Minute
 	l := New(&Config{
 		Dir:       os.TempDir(),
 		MinLSMTTL: 0 * time.Second,
