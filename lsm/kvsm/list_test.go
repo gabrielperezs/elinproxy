@@ -9,7 +9,7 @@ import (
 func TestListAdd(t *testing.T) {
 	l := &linkedListTTL{}
 	for i := 0; i <= 10; i++ {
-		e := newEntry(fmt.Sprintf("Entry %d", i))
+		e := &entry{p: fmt.Sprintf("Entry %d", i)}
 		t.Logf("add: %v", e.p)
 		l.Add(e)
 	}
@@ -22,7 +22,7 @@ func TestListAdd(t *testing.T) {
 			return
 		}
 		mustBe := fmt.Sprintf("Entry %d", i)
-		if e.GetValue().(string) != mustBe {
+		if e.p.(string) != mustBe {
 			t.Errorf("The pos %d don't match (%v - %v)", i, e.p, mustBe)
 		}
 		i++
@@ -33,16 +33,16 @@ func TestLinkedListReplace(t *testing.T) {
 	l := &linkedListTTL{}
 	els := make([]*entry, 10)
 	for i := 0; i < 10; i++ {
-		els[i] = newEntry(fmt.Sprintf("Entry %d", i))
+		els[i] = &entry{p: fmt.Sprintf("Entry %d", i)}
 		t.Logf("add: %v", els[i])
 		l.Add(els[i])
 	}
 
-	l.Replace(els[0], newEntry(fmt.Sprintf("Replaced %d", 1)))
-	l.Replace(els[5], newEntry(fmt.Sprintf("Replaced %d", 5)))
-	l.Replace(els[9], newEntry(fmt.Sprintf("Replaced %d", 9)))
+	l.Replace(els[0], &entry{p: fmt.Sprintf("Replaced %d", 1)})
+	l.Replace(els[5], &entry{p: fmt.Sprintf("Replaced %d", 5)})
+	l.Replace(els[9], &entry{p: fmt.Sprintf("Replaced %d", 9)})
 
-	t.Logf("First: %s - Last: %s", l.root.GetValue().(string), l.last.GetValue().(string))
+	t.Logf("First: %s - Last: %s", l.root.p.(string), l.last.p.(string))
 	i := 0
 	var e *entry
 	for {
@@ -50,7 +50,7 @@ func TestLinkedListReplace(t *testing.T) {
 		if e == nil {
 			return
 		}
-		t.Logf("D: %s", e.GetValue().(string))
+		t.Logf("D: %s", e.p.(string))
 		i++
 	}
 }
@@ -63,7 +63,9 @@ func BenchmarkListAdd(b *testing.B) {
 	var i int64
 	b.Run("add", func(pb *testing.B) {
 		atomic.AddInt64(&i, 1)
-		e := newEntry(fmt.Sprintf("Entry %d", i))
+		e := &entry{
+			p: fmt.Sprintf("Entry %d", i),
+		}
 		l.Add(e)
 	})
 	t := int(atomic.LoadInt64(&i))
@@ -75,7 +77,7 @@ func BenchmarkListAdd(b *testing.B) {
 func TestListAddRemove(t *testing.T) {
 	l := &linkedListTTL{}
 	for i := 0; i <= 5; i++ {
-		e := newEntry(fmt.Sprintf("Entry %d", i))
+		e := &entry{p: fmt.Sprintf("Entry %d", i)}
 		t.Logf("add: %v", e.p)
 		l.Add(e)
 	}
@@ -110,7 +112,7 @@ func BenchmarkListAddRemove(b *testing.B) {
 	var i int64
 	b.Run("add", func(pb *testing.B) {
 		li := atomic.AddInt64(&i, 1)
-		e := newEntry(fmt.Sprintf("Entry %d", li))
+		e := &entry{p: fmt.Sprintf("Entry %d", li)}
 		l.Add(e)
 		l.Remove(e)
 	})
@@ -122,7 +124,7 @@ func BenchmarkListAddRemove(b *testing.B) {
 func TestListAddSwap(t *testing.T) {
 	l := &linkedListTTL{}
 	for i := 0; i < 5; i++ {
-		e := newEntry(fmt.Sprintf("Entry %d", i))
+		e := &entry{p: fmt.Sprintf("Entry %d", i)}
 		l.Add(e)
 	}
 
@@ -150,7 +152,7 @@ func TestListAddSwap(t *testing.T) {
 			break
 		}
 
-		resultText += e.GetValue().(string)
+		resultText += e.p.(string)
 	}
 
 	if resultText != "Entry 0Entry 1Entry 3Entry 4Entry 2" {

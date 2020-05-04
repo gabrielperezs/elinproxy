@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"io"
-	"log"
 	"net/http"
 	"net/textproto"
 	"sync"
@@ -12,7 +11,7 @@ import (
 )
 
 const (
-	defaultBufferReadSize = 1024 * 4
+	defaultBufferReadSize = 1024 * 32
 )
 
 var (
@@ -22,22 +21,14 @@ var (
 )
 
 func getItemDisk() *ItemDisk {
-	in := itemDiskPool.Get()
-	if v, ok := in.(*ItemDisk); ok {
+	if v, ok := itemDiskPool.Get().(*ItemDisk); ok {
 		return v
 	}
 	return &ItemDisk{}
 }
 
 func putItemDisk(v *ItemDisk) {
-	v.BodySize = 0
-	v.HIT = 0
-	v.HeadSize = 0
-	v.Key = 0
-	v.Off = 0
-	v.StatusCode = 0
-	v.VFile = nil
-	v.inUse = 0
+	*v = ItemDisk{}
 	itemDiskPool.Put(v)
 }
 
@@ -73,15 +64,15 @@ func (itd *ItemDisk) GetHeader() http.Header {
 
 	n, err := itd.VFile.r.ReadAt(b.b, itd.Off)
 	if itd.HeadSize != int64(n) || err != nil {
-		log.Printf("lsm/itemDisk/GetHeader error reading: %s (bytes expected %d, bytes readed %d, cap %d, len %d)",
-			err, itd.HeadSize, n, cap(b.b), len(b.b))
+		// log.Printf("lsm/itemDisk/GetHeader error reading: %s (bytes expected %d, bytes readed %d, cap %d, len %d)",
+		// 	err.Error(), itd.HeadSize, n, cap(b.b), len(b.b))
 		return nil
 	}
 
 	tp := textproto.NewReader(b.buf)
 	h, err := tp.ReadMIMEHeader()
 	if err != nil {
-		log.Printf("lsm/itemDisk/GetHeader error parsing: %s", err)
+		//log.Printf("lsm/itemDisk/GetHeader error parsing: %s", err.Error())
 		return nil
 	}
 	return http.Header(h)
@@ -184,12 +175,12 @@ func (itd *ItemDisk) WriteToRange(w io.Writer, from, to int64) (int64, error) {
 // NOTE: Don't use for critical operations, it works without a sync.Pool,
 // use WriteTo instead.
 func (itd *ItemDisk) Bytes() []byte {
-	b := bytes.NewBuffer(make([]byte, 0, itd.Len()))
-	_, err := itd.writeTo(b, 0, 0)
+	buf := bytes.NewBuffer(make([]byte, 0, itd.Len()))
+	_, err := itd.writeTo(buf, 0, 0)
 	if err != nil {
 		return nil
 	}
-	return b.Bytes()
+	return buf.Bytes()
 }
 
 // GetHIT will return the total hits accumulated by this item

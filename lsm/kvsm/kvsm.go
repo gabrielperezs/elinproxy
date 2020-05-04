@@ -54,8 +54,8 @@ func (kv *KVSM) Set(k uint64, v interface{}, ttl time.Duration) {
 	e := entryPool.Get().(*entry)
 	e.key = k
 	e.expireAt = time.Now().Add(ttl).UnixNano()
-	e.Value(v)
-	kv.items.Store(e.key, e)
+	e.p = v
+	kv.items.Store(k, e)
 	atomic.AddInt64(&kv.n, 1)
 	kv.addLLCh <- expMsg{
 		ttl:   ttl,
@@ -74,7 +74,7 @@ func (kv *KVSM) Get(k interface{}) (v interface{}, expired bool, ok bool) {
 		expired = true
 		return
 	}
-	return e.GetValue(), e.Expired(), true
+	return e.p, e.Expired(), true
 }
 
 func (kv *KVSM) Swap(k uint64, v interface{}, ttl time.Duration) bool {
@@ -82,9 +82,11 @@ func (kv *KVSM) Swap(k uint64, v interface{}, ttl time.Duration) bool {
 	if !ok {
 		kv.Set(k, v, ttl)
 	} else {
-		old := eiface.(*entry).SwapValue(v)
+		e := eiface.(*entry)
+		old := e.Clone()
+		e.p = v
 		if kv.onEvicted != nil {
-			kv.onEvicted(old)
+			kv.onEvicted(&old)
 		}
 	}
 	return true
@@ -106,13 +108,13 @@ func (kv *KVSM) RemoveByKey(k uint64) {
 	if !ok {
 		return
 	}
-	e.ValueReset()
+	e.p = nil
 	e.expireAt = 0
 }
 
 func (kv *KVSM) eviction(e *entry) {
 	if kv.onEvicted != nil {
-		p := e.GetValue()
+		p := e.p
 		if p != nil {
 			kv.onEvicted(p)
 		}
@@ -148,7 +150,7 @@ func (kv *KVSM) workerExpiration() {
 				tkd := time.Duration(k) * time.Second
 				if _, ok := kv.listTTL[tkd]; !ok {
 					// Paranotic. Protection for invalid ttl
-					log.Printf("KVSM: Invalid TTL: %s", tkd)
+					log.Printf("KVSM: Invalid TTL: %s", tkd.String())
 					continue
 				}
 				if kv.listTTL[tkd].Len() == 0 {
@@ -168,7 +170,7 @@ func (kv *KVSM) workerExpiration() {
 						break
 					}
 
-					p := e.GetValue()
+					p := e.p
 					if p == nil || e.Expired() {
 						kv.listTTL[tkd].Remove(e)
 						kv.Remove(e)

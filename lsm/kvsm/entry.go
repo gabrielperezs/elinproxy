@@ -2,20 +2,26 @@ package kvsm
 
 import (
 	"sync"
-	"sync/atomic"
 	"time"
-	"unsafe"
 )
 
 var (
-	noContent        interface{}
-	noContentPointer = unsafe.Pointer(&noContent)
+	entryPool = sync.Pool{
+		New: func() interface{} {
+			return &entry{}
+		},
+	}
 )
 
+func putEntry(e *entry) {
+	*e = entry{}
+	entryPool.Put(e)
+}
+
 type entry struct {
-	key      interface{}
 	expireAt int64
-	p        unsafe.Pointer
+	key      uint64
+	p        interface{}
 	prev     *entry
 	next     *entry
 }
@@ -28,47 +34,12 @@ func (e *entry) Expired() (ok bool) {
 	return
 }
 
-// Value store the value
-func (e *entry) Value(v interface{}) {
-	atomic.StorePointer(&e.p, unsafe.Pointer(&v))
-}
-
-// Value store the value
-func (e *entry) ValueReset() {
-	atomic.StorePointer(&e.p, noContentPointer)
-}
-
-// GetValue return the value
-func (e *entry) GetValue() interface{} {
-	v := atomic.LoadPointer(&e.p)
-	return *(*interface{})(v)
-}
-
-// SwapValue store the new value and return the old value
-func (e *entry) SwapValue(v interface{}) interface{} {
-	old := atomic.SwapPointer(&e.p, unsafe.Pointer(&v))
-	return *(*interface{})(old)
-}
-
-func newEntry(v interface{}) *entry {
-	e := entryPool.Get().(*entry)
-	e.Value(v)
-	return e
-}
-
-var (
-	entryPool = sync.Pool{
-		New: func() interface{} {
-			return &entry{}
-		},
-	}
-)
-
-func putEntry(e *entry) {
-	e.ValueReset()
-	e.prev = nil
-	e.next = nil
-	e.key = nil
-	e.expireAt = 0
-	entryPool.Put(e)
+// Clone return a copy of the current entry removing
+// the pointers to prev and next
+func (e *entry) Clone() entry {
+	n := entry{}
+	n = *e
+	n.prev = nil
+	n.next = nil
+	return n
 }
