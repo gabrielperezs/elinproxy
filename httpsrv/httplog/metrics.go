@@ -22,7 +22,8 @@ type metrics struct {
 }
 
 var (
-	labels = []string{"ratelimit", "hit", "code", "method", "schema"}
+	labels     = []string{"ratelimit", "hit", "code", "method", "schema"}
+	defBuckets = []float64{0.005, 0.05, 0.1, 0.5, 1, 2, 5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000, 10000, 30000, 60000, 300000, 600000, 1800000, 3600000}
 )
 
 func newMetrics() *metrics {
@@ -32,12 +33,14 @@ func newMetrics() *metrics {
 			Subsystem: "handler",
 			Name:      metricResponseTTFB,
 			Help:      "Reponse TTFB",
+			Buckets:   defBuckets,
 		}, labels),
 		responseTime: promauto.NewHistogramVec(prometheus.HistogramOpts{
 			Namespace: "elinproxy",
 			Subsystem: "handler",
 			Name:      metricResponseTime,
 			Help:      "Reponse time",
+			Buckets:   defBuckets,
 		}, labels),
 		responseCode: promauto.NewCounterVec(prometheus.CounterOpts{
 			Namespace: "elinproxy",
@@ -64,7 +67,7 @@ func (m *metrics) save(l *HTTPLog) {
 		"schema":    l.Schema,
 	}
 	m.responseCode.With(label).Inc()
+	m.responseSize.With(label).Add(float64(l.RespBytes))
 	m.responseTTFB.With(label).Observe(l.RespTTFMS)
 	m.responseTime.With(label).Observe(l.RespTimeMS)
-	m.responseSize.With(label).Add(float64(l.RespBytes))
 }

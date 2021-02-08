@@ -388,7 +388,7 @@ func (handler *Handler) modifyResponse(key uint64, resp *http.Response, ttl time
 
 func (handler *Handler) buildBackendURL(req *http.Request) {
 	var uri string
-	if req.TLS != nil && handler.cfg.BackendTLSHost != "" {
+	if (req.TLS != nil || req.Header.Get("X-Forwarded-Protocol") == "https") && handler.cfg.BackendTLSHost != "" {
 		uri = fmt.Sprintf("https://%s:%s%s", handler.cfg.BackendTLSHost, handler.cfg.BackendTLSPort, req.URL.Path)
 	} else {
 		uri = fmt.Sprintf("http://%s:%s%s", handler.cfg.BackendHost, handler.cfg.BackendPort, req.URL.Path)
